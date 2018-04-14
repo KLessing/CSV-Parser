@@ -1,0 +1,19 @@
+Fragen
+
+Sollen nur csv Dateien importiert werden können und auch andere Dateien wie z.B. Excel Dateien, die dann in csv Dateien umgewandelt werden
+
+automatisch Typ ermitteln und für jede Zeile fragen ob ok
+
+
+
+TODO
+
+Trennzeichen dynamisch
+Textmarker danamisch
+
+AJAX?!
+
+Überschrift erste Zeile sonst selbst definieren
+
+
+content als globale var damit für alle eventlistener anpassbar
