@@ -33,28 +33,51 @@ function splitRow(row, delimiter, textMarker) {
 	return res;
 }
 
-function showResultAsTable(data) {
+// data = result Daten
+// header = header falls eigener
+// use Header = true, wenn eigener header benutzt werden soll
+function showResultAsTable(data, header, useHeader) {
 	let table = document.querySelector("#result-table");
+	let headerData = [];
+	let index = 0;
+
+	if (useHeader) {
+		headerData = header;
+	}
+	else {
+		headerData = data[0];
+		index = 1;
+	}
+
+	// Remove all table nodes
+	while (table.hasChildNodes()) {
+		table.removeChild(table.firstChild);
+	}
 
 	let tableHeader = document.createElement("thead");
 	tableHeader.appendChild(document.createElement("tr"));
-	data[0].forEach(header => {
+
+	headerData.forEach(header => {
 		let currentCol = document.createElement("th");
 		currentCol.innerHTML = header;
 		tableHeader.appendChild(currentCol);
 	});
+
 	table.appendChild(tableHeader);
 
 	let tableBody = document.createElement("tbody");
-	for(let i = 1; i < data.length; i++) {
+	// iterate rows
+	for(index; index < data.length; index++) {
 		tableBody.appendChild(document.createElement("tr"))
-		data[i].forEach(data => {
+		// iterate cols
+		data[index].forEach(data => {
 			let currentCol = document.createElement("td");
 			currentCol.innerHTML = data;
 			tableBody.appendChild(currentCol);
 		});
 	}
 	table.appendChild(tableBody);
+	
 }
 
 
@@ -84,16 +107,13 @@ fileInput.addEventListener("change", function() {
   		let content = evt.target.result;
   		// split line feed for rows
       let rows = content.split("\r");
-      console.log(rows);
-      let cols = rows.map(row => splitRow(row, delimiter.value, textMarker.value));        			
-      console.log(cols);
-
-      Data = cols;
-
-      showResultAsTable(cols);
+      // get Columns for each row
+      Data = rows.map(row => splitRow(row, delimiter.value, textMarker.value));        			
+      // Show table with or without header
+      showResultAsTable(Data, [], useOwnHeaderDef.checked);
   }
   reader.onerror = function (evt) {
-      console.log("error reading file");
+      console.log("Error reading file");
   }
 });
 
@@ -102,14 +122,18 @@ let headlineUsage = document.querySelector("#headline-usage");
 let showHeadlineFields = document.querySelector("#show-headline-fields");
 let headlineFields = document.querySelector("#headline-fields");
 let useHeadline = document.querySelector("#use-headline");
-let useData = document.querySelector("#use-data");
+let useOwnHeaderDef = document.querySelector("#use-own-header");
 
 headlineUsage.addEventListener("change", () => {
 	if (useHeadline.checked) {
 		showHeadlineFields.style.display = "none";
+		// Update Table if data available
+		if (Data.length > 0) {
+			showResultAsTable(Data, [], false);
+		}
 	}
-	else if (useData.checked) {
-		// Default count of Colums
+	else if (useOwnHeaderDef.checked) {
+		// Default count of colums
 		let colCount = 5;
 		// Data available?
 		if(Data.length > 0) {
@@ -122,18 +146,43 @@ headlineUsage.addEventListener("change", () => {
 			headlineFields.removeChild(headlineFields.firstChild);
 		}
 
+		// Add all labels and input fields
 		for(let i = 0; i < colCount; i++) {
 			let label = document.createElement("label");
-			label.setAttribute("for", "x")
+			label.setAttribute("for", "headline-" + i);
 			label.innerHTML = "Headline " + parseInt(i+1);
 			headlineFields.appendChild(label);
 			let input = document.createElement("input");
 			input.setAttribute("type", "text");
-			input.setAttribute("id", "x");
+			input.setAttribute("id", "headline-" + i);
+			if(Header[i]){
+				input.setAttribute("value", Header[i]);
+			}			
 			headlineFields.appendChild(input);
 		}
 
-
 		showHeadlineFields.style.display = "block";
+
+		// Update Table if data available
+		if (Data.length > 0) {
+			showResultAsTable(Data, Header, true);
+		}		
 	}
+});
+
+
+let applyButton = document.querySelector('#apply-changes');
+
+applyButton.addEventListener("click", function() {
+	// Get all Headline Inputs
+	let headlines = Array.from(document.querySelectorAll("#headline-fields input"));
+	// Empty Global Headlines array
+	Header = [];
+	// Fill Global Headlines array with new values
+	headlines.forEach(headline => Header.push(headline.value));
+
+	// Update Table if data available
+	if (Data.length > 0) {
+		showResultAsTable(Data, Header, true);
+	}	
 });
