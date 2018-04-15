@@ -11,9 +11,12 @@ TODO
 Trennzeichen dynamisch
 Textmarker danamisch
 
-AJAX?!
+Unterscheidung zwischen linefeed und carriage return
+mehrere Dateien testen
 
-Überschrift erste Zeile sonst selbst definieren
+Beide werden immer erkannt
+wenn nur nach lf gesplittet,
+bleibt cr aber drin
 
-
-content als globale var damit für alle eventlistener anpassbar
+json export zu datei
+json export bei leeren headlines

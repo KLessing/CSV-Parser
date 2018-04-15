@@ -77,13 +77,36 @@ function showResultAsTable(data, header, useHeader) {
 		});
 	}
 	table.appendChild(tableBody);
-	
 }
 
+// data = result Daten
+// header = header falls eigener
+// use Header = true, wenn eigener header benutzt werden soll
+function exportAsJSON(data, header, useHeader) {
+	let arrayOfDataObjects = [];
+	let currentDataObject = {};
+	let headerData = [];
+	let rowIndex = 0;
+	let colIndex = 0;
 
-function exportAsJSON(data) {}
+	if (useHeader) {
+		headerData = header;
+	}
+	else {
+		headerData = data[0];
+		rowIndex = 1;
+	}
+	
+	for(rowIndex; rowIndex < data.length; rowIndex++) {
+		currentDataObject = {};
+		for(colIndex = 0; colIndex < data[rowIndex].length; colIndex++){
+			currentDataObject[headerData[colIndex]] = data[rowIndex][colIndex];
+		}
+		arrayOfDataObjects.push(currentDataObject);
+	}
 
-function exportsAsCSV(data) {}
+	console.log(arrayOfDataObjects);
+}
 
 
 
@@ -93,7 +116,12 @@ function exportsAsCSV(data) {}
 let Data = [];
 let Header = [];
 
+/* --- File Manipulation --- */
 let reader = new FileReader();
+//let Writer = new FileWriter(); todo
+
+/* ----- DOM Manipulation ----- */
+
 let fileInput = document.querySelector("#fileInput");
 let delimiter = document.querySelector("#delimiter");
 let textMarker = document.querySelector("#text-marker");
@@ -106,7 +134,7 @@ fileInput.addEventListener("change", function() {
   		// TODO lodash für map beim Laden?!
   		let content = evt.target.result;
   		// split line feed for rows
-      let rows = content.split("\r");
+      let rows = content.split("\n");
       // get Columns for each row
       Data = rows.map(row => splitRow(row, delimiter.value, textMarker.value));        			
       // Show table with or without header
@@ -170,6 +198,7 @@ headlineUsage.addEventListener("change", () => {
 	}
 });
 
+/* --- Buttons --- */
 
 let applyButton = document.querySelector('#apply-changes');
 
@@ -185,4 +214,10 @@ applyButton.addEventListener("click", function() {
 	if (Data.length > 0) {
 		showResultAsTable(Data, Header, true);
 	}	
+});
+
+let createJsonButton = document.querySelector('#create-json');
+
+createJsonButton.addEventListener("click", function() {
+	exportAsJSON(Data, Header, useOwnHeaderDef.checked);
 });
