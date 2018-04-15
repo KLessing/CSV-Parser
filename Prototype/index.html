@@ -15,6 +15,26 @@
 	#delimiter {
 		width: 2rem;
 	}
+
+	/* initialize as hidden */
+	#show-headline-fields {
+		display: none;
+		margin-bottom: 1rem;
+	}
+
+	#headline-fields {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#headline-fields input{
+		width: 10rem;
+		margin-bottom: 1rem;
+
+	}
+
 </style>
 
 <!DOCTYPE html>
@@ -26,13 +46,20 @@
 	<body>
 		<div class="container">
 		
-			<div class="form-group">
+			<div id="headline-usage">
 				Erste Zeile:
 				<label for="use-headline">Überschrift</label>
 				<input type="radio" id="use-headline" name="first-line" value="use-headline" checked>
 
 				<label for="use-data">Daten</label>
 				<input type="radio" id="use-data" name="first-line" value="use-data">
+
+				<div id="show-headline-fields">
+					Überschriften zuweisen:
+					<div id="headline-fields">
+					</div>
+					<button id="apply-changes">anwenden</button>
+				</div>
 			</div>
 
 	    <div class="form-group">
@@ -42,7 +69,7 @@
 
 			<div class="form-group">
 				Text Markierung:
-				<select id="textMarker">
+				<select id="text-marker">
 					<option value="&#34">"</option>
 					<option value="&#39">'</option>						
 				</select>
@@ -52,15 +79,17 @@
 				<label for="fileInput">CSV Datei: </label>
 				<input type="file" id="fileInput">
 			</div>
-		</body>	
+		
 
-		<table id="result-table" class="table table-bordered"></table>
+			<table id="result-table" class="table table-bordered"></table>
 
-		<button>Erzeuge JSON Datei</button>
+			<button>Erzeuge JSON Datei</button>
 
-		<button>Erzeuge CSV Datei</button>
+			<button>Erzeuge CSV Datei</button>
 
-	</div>
+		</div>
+
+	</body>	
 
 </html>
 
