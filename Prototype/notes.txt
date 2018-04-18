@@ -7,6 +7,4 @@ Textmarker danamisch
 json export zu datei
 json export bei leeren headlines
 
-Refactoring
-
 lodash?!

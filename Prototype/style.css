@@ -1,0 +1,29 @@
+/* Just simple style Modifications */
+
+.container {
+	text-align: center;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+#delimiter {
+	width: 2rem;
+}
+
+/* initialize as hidden */
+#show-headline-fields {
+	display: none;
+	margin-bottom: 1rem;
+}
+
+#headline-fields {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#headline-fields input{
+	width: 10rem;
+	margin-bottom: 1rem;
+}
