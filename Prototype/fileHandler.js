@@ -131,10 +131,18 @@ fileInput.addEventListener("change", function() {
 	reader.readAsText(this.files[0], "UTF-8");
 
   reader.onload = function (evt) {
+
   		// TODO lodash für map beim Laden?!
+
+  		// Get full content string from the file
   		let content = evt.target.result;
-  		// split line feed for rows
+
+  		// split by carriage return for rows
       let rows = content.split("\n");
+      // include always depends on both cr AND lf
+      // => split by line feed also (order important)
+      rows = content.split("\r");
+
       // get Columns for each row
       Data = rows.map(row => splitRow(row, delimiter.value, textMarker.value));        			
       // Show table with or without header
