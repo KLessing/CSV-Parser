@@ -1,5 +1,8 @@
 TODO
 
+Einlesevorgang als Update auslagern
+dann entsprechend dynamisch updaten
+
 reload für neue datei
 Trennzeichen dynamisch
 Textmarker danamisch

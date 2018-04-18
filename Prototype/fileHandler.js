@@ -39,7 +39,7 @@ fileInput.addEventListener("change", function() {
   }
 });
 
-/* --- change Headline Usage --- */ 
+/* --- Change Headline Usage --- */ 
 let headlineUsage = document.querySelector("#headline-usage");
 let showHeadlineFields = document.querySelector("#show-headline-fields");
 let headlineFields = document.querySelector("#headline-fields");
@@ -114,9 +114,30 @@ let createJsonButton = document.querySelector('#create-json');
 
 createJsonButton.addEventListener("click", function() {
 	JSONData = updateJSON(Data, Header, useOwnHeaderDef.checked);
-	console.log(JSONData);
 });
 
 /* --- Updates --- */
 
+let delimiterInput = document.querySelector("#delimiter");
 
+delimiterInput.addEventListener("change", function() {
+	// Change Data for new delimiter
+
+	// Table available?
+	if (document.querySelector('#result-table').innerHTML !== "") {
+		console.log("changing Table");
+		updateTable(Data, Header, useOwnHeaderDef.checked);
+	}
+	// JSON Object Data defined?
+	if (Object.keys(JSONData).length !== 0) {
+		console.log("changing JSON");
+		JSONData = updateJSON(Data, Header, useOwnHeaderDef.checked);
+	}
+
+});
+
+let textMarkerSelect = document.querySelector("#text-marker");
+
+textMarkerSelect.addEventListener("change", function() {
+
+});

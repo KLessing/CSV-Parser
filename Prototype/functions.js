@@ -106,5 +106,6 @@ function updateJSON(data, header, useHeader) {
 	}
 
 	// TODO Datei?!
+	console.log(arrayOfDataObjects);
 	return arrayOfDataObjects;
 }
