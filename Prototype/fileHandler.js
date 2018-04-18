@@ -1,6 +1,7 @@
 /* Global Variables */
 let Data = [];
 let Header = [];
+let JSONData = {};
 
 /* --- File Manipulation --- */
 let reader = new FileReader();
@@ -8,14 +9,13 @@ let reader = new FileReader();
 
 /* ----- DOM Manipulation ----- */
 
+/* --- Read File --- */
 let fileInput = document.querySelector("#fileInput");
 let delimiter = document.querySelector("#delimiter");
 let textMarker = document.querySelector("#text-marker");
 
 fileInput.addEventListener("change", function() {
-
 	reader.readAsText(this.files[0], "UTF-8");
-
   reader.onload = function (evt) {
 
   		// TODO lodash für map beim Laden?!
@@ -32,14 +32,14 @@ fileInput.addEventListener("change", function() {
       // get Columns for each row
       Data = rows.map(row => splitRow(row, delimiter.value, textMarker.value));        			
       // Show table with or without header
-      showResultAsTable(Data, [], useOwnHeaderDef.checked);
+      updateTable(Data, [], useOwnHeaderDef.checked);
   }
   reader.onerror = function (evt) {
       console.log("Error reading file");
   }
 });
 
-
+/* --- change Headline Usage --- */ 
 let headlineUsage = document.querySelector("#headline-usage");
 let showHeadlineFields = document.querySelector("#show-headline-fields");
 let headlineFields = document.querySelector("#headline-fields");
@@ -51,7 +51,7 @@ headlineUsage.addEventListener("change", () => {
 		showHeadlineFields.style.display = "none";
 		// Update Table if data available
 		if (Data.length > 0) {
-			showResultAsTable(Data, [], false);
+			updateTable(Data, [], false);
 		}
 	}
 	else if (useOwnHeaderDef.checked) {
@@ -87,7 +87,7 @@ headlineUsage.addEventListener("change", () => {
 
 		// Update Table if data available
 		if (Data.length > 0) {
-			showResultAsTable(Data, Header, true);
+			updateTable(Data, Header, true);
 		}		
 	}
 });
@@ -106,12 +106,17 @@ applyButton.addEventListener("click", function() {
 
 	// Update Table if data available
 	if (Data.length > 0) {
-		showResultAsTable(Data, Header, true);
+		updateTable(Data, Header, true);
 	}	
 });
 
 let createJsonButton = document.querySelector('#create-json');
 
 createJsonButton.addEventListener("click", function() {
-	exportAsJSON(Data, Header, useOwnHeaderDef.checked);
+	JSONData = updateJSON(Data, Header, useOwnHeaderDef.checked);
+	console.log(JSONData);
 });
+
+/* --- Updates --- */
+
+

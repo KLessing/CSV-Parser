@@ -34,7 +34,8 @@ function splitRow(row, delimiter, textMarker) {
 // data = result Daten
 // header = header falls eigener
 // use Header = true, wenn eigener header benutzt werden soll
-function showResultAsTable(data, header, useHeader) {
+// Updated die Tabelle
+function updateTable(data, header, useHeader) {
 	let table = document.querySelector("#result-table");
 	let headerData = [];
 	let index = 0;
@@ -80,7 +81,8 @@ function showResultAsTable(data, header, useHeader) {
 // data = result Daten
 // header = header falls eigener
 // use Header = true, wenn eigener header benutzt werden soll
-function exportAsJSON(data, header, useHeader) {
+// Returns JSON Object for Data
+function updateJSON(data, header, useHeader) {
 	let arrayOfDataObjects = [];
 	let currentDataObject = {};
 	let headerData = [];
@@ -104,5 +106,5 @@ function exportAsJSON(data, header, useHeader) {
 	}
 
 	// TODO Datei?!
-	console.log(arrayOfDataObjects);
+	return arrayOfDataObjects;
 }
