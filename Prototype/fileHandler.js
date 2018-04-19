@@ -119,18 +119,23 @@ createJsonButton.addEventListener("click", function() {
 /* --- Updates --- */
 
 let delimiterInput = document.querySelector("#delimiter");
+let changeEvent = new CustomEvent('change', {bubbles: true, cancelable: true});
+
 
 delimiterInput.addEventListener("change", function() {
 	// Change Data for new delimiter
+	
 
 	// Table available?
 	if (document.querySelector('#result-table').innerHTML !== "") {
 		console.log("changing Table");
-		updateTable(Data, Header, useOwnHeaderDef.checked);
+		// Trigger change Event to reload Data with new parameters
+		fileInput.dispatchEvent(changeEvent);
 	}
 	// JSON Object Data defined?
 	if (Object.keys(JSONData).length !== 0) {
 		console.log("changing JSON");
+		console.log(useOwnHeaderDef.checked);
 		JSONData = updateJSON(Data, Header, useOwnHeaderDef.checked);
 	}
 
