@@ -121,28 +121,25 @@ createJsonButton.addEventListener("click", function() {
 let delimiterInput = document.querySelector("#delimiter");
 let changeEvent = new CustomEvent('change', {bubbles: true, cancelable: true});
 
-
-delimiterInput.addEventListener("change", function() {
-	// Change Data for new delimiter
-	
-
+function dataUpdate(){
 	// Table available?
 	if (document.querySelector('#result-table').innerHTML !== "") {
-		console.log("changing Table");
 		// Trigger change Event to reload Data with new parameters
 		fileInput.dispatchEvent(changeEvent);
 	}
 	// JSON Object Data defined?
 	if (Object.keys(JSONData).length !== 0) {
-		console.log("changing JSON");
-		console.log(useOwnHeaderDef.checked);
+		// TODO erst nachdem Datei eingelesen und Data aktualisiert ist ausführen
 		JSONData = updateJSON(Data, Header, useOwnHeaderDef.checked);
 	}
+}
 
+delimiterInput.addEventListener("change", function() {
+	dataUpdate();
 });
 
 let textMarkerSelect = document.querySelector("#text-marker");
 
 textMarkerSelect.addEventListener("change", function() {
-
+	dataUpdate();
 });
