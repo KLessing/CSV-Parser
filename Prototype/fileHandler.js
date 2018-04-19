@@ -122,15 +122,16 @@ let delimiterInput = document.querySelector("#delimiter");
 let changeEvent = new CustomEvent('change', {bubbles: true, cancelable: true});
 
 function dataUpdate(){
-	// Table available?
-	if (document.querySelector('#result-table').innerHTML !== "") {
+	// Data available?
+	if (Data.length !== 0) {
 		// Trigger change Event to reload Data with new parameters
 		fileInput.dispatchEvent(changeEvent);
-	}
-	// JSON Object Data defined?
-	if (Object.keys(JSONData).length !== 0) {
-		// TODO erst nachdem Datei eingelesen und Data aktualisiert ist ausführen
-		JSONData = updateJSON(Data, Header, useOwnHeaderDef.checked);
+	
+		// JSON Object Data defined?
+		if (Object.keys(JSONData).length !== 0) {
+			// TODO erst nachdem Datei eingelesen und Data aktualisiert ist ausführen
+			JSONData = updateJSON(Data, Header, useOwnHeaderDef.checked);
+		}
 	}
 }
 

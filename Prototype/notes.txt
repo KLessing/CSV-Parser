@@ -1,13 +1,9 @@
 TODO
 
-Einlesevorgang als Update auslagern
-dann entsprechend dynamisch updaten
-
-// TODO erst nachdem Datei eingelesen und Data aktualisiert ist JSON Update ausführen
+erst nachdem Datei eingelesen und Data aktualisiert ist JSON Update ausführen
+=> Promise definieren
 
 reload für neue datei
-Trennzeichen dynamisch
-Textmarker danamisch
 
 json export zu datei
 json export bei leeren headlines
