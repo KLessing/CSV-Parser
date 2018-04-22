@@ -5,7 +5,24 @@ erst nachdem Datei eingelesen und Data aktualisiert ist JSON Update ausführen
 
 reload für neue datei
 
-json export zu datei
 json export bei leeren headlines
 
+Headline Anzahl für die Row mit den meisten cols
+
+Zeilenumbruch in erster Spalte?!
+
+Push und Pop vom Array für Headline
+globale var für Status (headline oder nicht)
+Headline array entsorgen?
+
 lodash?!
+
+Test mit jest
+
+
+---------
+
+Doku:
+
+async/await für fileread und verarbeitung
+in verbindung oder s promises?!

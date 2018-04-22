@@ -5,7 +5,6 @@ let JSONData = {};
 
 /* --- File Manipulation --- */
 let reader = new FileReader();
-//let Writer = new FileWriter(); TODO
 
 /* ----- DOM Manipulation ----- */
 
@@ -15,28 +14,7 @@ let delimiter = document.querySelector("#delimiter");
 let textMarker = document.querySelector("#text-marker");
 
 fileInput.addEventListener("change", function() {
-	reader.readAsText(this.files[0], "UTF-8");
-  reader.onload = function (evt) {
-
-  		// TODO lodash für map beim Laden?!
-
-  		// Get full content string from the file
-  		let content = evt.target.result;
-
-  		// split by carriage return for rows
-      let rows = content.split("\n");
-      // include always depends on both cr AND lf
-      // => split by line feed also (order important)
-      rows = content.split("\r");
-
-      // get Columns for each row
-      Data = rows.map(row => splitRow(row, delimiter.value, textMarker.value));        			
-      // Show table with or without header
-      updateTable(Data, [], useOwnHeaderDef.checked);
-  }
-  reader.onerror = function (evt) {
-      console.log("Error reading file");
-  }
+	handleDataUpload(this);
 });
 
 /* --- Change Headline Usage --- */ 
@@ -110,10 +88,10 @@ applyButton.addEventListener("click", function() {
 	}	
 });
 
-let createJsonButton = document.querySelector('#create-json');
+let showJsonButton = document.querySelector('#show-json');
 
-createJsonButton.addEventListener("click", function() {
-	JSONData = updateJSON(Data, Header, useOwnHeaderDef.checked);
+showJsonButton.addEventListener("click", function() {
+	console.log(JSONData);
 });
 
 /* --- Updates --- */
@@ -126,12 +104,6 @@ function dataUpdate(){
 	if (Data.length !== 0) {
 		// Trigger change Event to reload Data with new parameters
 		fileInput.dispatchEvent(changeEvent);
-	
-		// JSON Object Data defined?
-		if (Object.keys(JSONData).length !== 0) {
-			// TODO erst nachdem Datei eingelesen und Data aktualisiert ist ausführen
-			JSONData = updateJSON(Data, Header, useOwnHeaderDef.checked);
-		}
 	}
 }
 

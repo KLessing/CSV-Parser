@@ -105,7 +105,52 @@ function updateJSON(data, header, useHeader) {
 		arrayOfDataObjects.push(currentDataObject);
 	}
 
-	// TODO Datei?!
-	console.log(arrayOfDataObjects);
 	return arrayOfDataObjects;
+}
+
+const readUploadedFileAsText = (inputFile) => {
+  const temporaryFileReader = new FileReader();
+
+  return new Promise((resolve, reject) => {
+    temporaryFileReader.onerror = () => {
+      temporaryFileReader.abort();
+      reject(new DOMException("Problem parsing input file."));
+    };
+
+    temporaryFileReader.onload = () => {
+      resolve(temporaryFileReader.result);
+    };
+    temporaryFileReader.readAsText(inputFile);
+  });
+};
+
+function dataStringToArray(dataString) {
+		// split by carriage return for rows
+    let rows = dataString.split("\n");
+    // include always depends on both cr AND lf
+    // => split by line feed also (order important)
+    rows = dataString.split("\r");
+    // get Columns for each row and save Data global
+    return rows.map(row => splitRow(row, delimiter.value, textMarker.value));        			
+}
+
+const handleDataUpload = async (event) => {
+  const file = event.files[0];
+
+  try {
+  	// Wait until the File is read
+    const dataString = await readUploadedFileAsText(file);  
+
+    // Update Data Array
+    Data = dataStringToArray(dataString);
+
+    // Update JSON
+    JSONData = updateJSON(Data, Header, useOwnHeaderDef.checked);
+
+    // Show table with or without header
+    updateTable(Data, [], useOwnHeaderDef.checked);
+
+  } catch (e) {
+    console.warn(e.message)
+  }
 }
