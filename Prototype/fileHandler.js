@@ -34,12 +34,9 @@ headlineUsage.addEventListener("change", () => {
 	}
 	else if (useOwnHeaderDef.checked) {
 		// Default count of colums
-		let colCount = 5;
-		// Data available?
-		if(Data.length > 0) {
-			// Colums for all available colums
-			colCount = Data[0].length;
-		}
+		let colCount = getMaxColCount(Data, 5);
+		// Truncate previous overflow
+		Header = Header.slice(0, colCount);
 
 		// Remove all previous fields
 		while (headlineFields.hasChildNodes()) {
@@ -63,10 +60,11 @@ headlineUsage.addEventListener("change", () => {
 
 		showHeadlineFields.style.display = "block";
 
+		
 		// Update Table if data available
 		if (Data.length > 0) {
 			updateTable(Data, Header, true);
-		}		
+		}	
 	}
 });
 

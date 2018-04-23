@@ -78,6 +78,20 @@ function updateTable(data, header, useHeader) {
 	table.appendChild(tableBody);
 }
 
+// return the max count of cols from an array or the default value
+// when data is undefined
+function getMaxColCount(data, defaultValue) {
+	let maxCount = 0;
+	if (data.length > 0) {
+		data.forEach(row => row.length > maxCount ? maxCount = row.length : row);
+	}
+	else {
+		maxCount = defaultValue;
+	}
+	console.log(maxCount);
+	return maxCount;
+}
+
 // data = result Daten
 // header = header falls eigener
 // use Header = true, wenn eigener header benutzt werden soll
