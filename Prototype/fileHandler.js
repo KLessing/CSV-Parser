@@ -33,33 +33,7 @@ headlineUsage.addEventListener("change", () => {
 		}
 	}
 	else if (useOwnHeaderDef.checked) {
-		// Default count of colums
-		let colCount = getMaxColCount(Data, 5);
-		// Truncate previous overflow
-		Header = Header.slice(0, colCount);
-
-		// Remove all previous fields
-		while (headlineFields.hasChildNodes()) {
-			headlineFields.removeChild(headlineFields.firstChild);
-		}
-
-		// Add all labels and input fields
-		for(let i = 0; i < colCount; i++) {
-			let label = document.createElement("label");
-			label.setAttribute("for", "headline-" + i);
-			label.innerHTML = "Headline " + parseInt(i+1);
-			headlineFields.appendChild(label);
-			let input = document.createElement("input");
-			input.setAttribute("type", "text");
-			input.setAttribute("id", "headline-" + i);
-			if(Header[i]){
-				input.setAttribute("value", Header[i]);
-			}			
-			headlineFields.appendChild(input);
-		}
-
-		showHeadlineFields.style.display = "block";
-
+		updateHeadlineFields();
 		
 		// Update Table if data available
 		if (Data.length > 0) {
@@ -102,6 +76,10 @@ function dataUpdate(){
 	if (Data.length !== 0) {
 		// Trigger change Event to reload Data with new parameters
 		fileInput.dispatchEvent(changeEvent);
+	}
+
+	if (useOwnHeaderDef.checked) {
+		updateHeadlineFields();
 	}
 }
 
