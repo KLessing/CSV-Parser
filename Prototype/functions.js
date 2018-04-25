@@ -125,11 +125,25 @@ const readUploadedFileAsText = (inputFile) => {
 };
 
 function dataStringToArray(dataString) {
-		// split by carriage return for rows
-    let rows = dataString.split("\n");
-    // include always depends on both cr AND lf
-    // => split by line feed also (order important)
-    rows = dataString.split("\r");
+	let splitter = "";
+	let rows = [];
+	
+	// identify line breaks
+	if (dataString.includes("\r\n")) {
+		// split by both
+		splitter = "\r\n";
+	}
+	else if (dataString.includes("\n")) {
+		// split only by carriage return
+		splitter = "\n";
+	}
+	else if (dataString.includes("\r")) {
+		// split only by line feed
+		splitter = "\r";
+	}
+	
+    rows = dataString.split(splitter);  
+    
     // get Columns for each row and save Data global
     return rows.map(row => splitRow(row, delimiter.value, textMarker.value));        			
 }
